@@ -1,0 +1,93 @@
+# Read CSV file
+read.csv('test.csv')
+
+# Get current dir 
+getwd()
+dir
+dir()
+
+# Check file exist 
+if (!file.exists("data")) {dir.create("data")}
+
+# get csv file from URL : download.file
+fileUrl <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.csv?accessType=DOWNLOAD"
+download.file(fileUrl, destfile = "./data/cameras.csv", method = "curl")
+list.files("./data")
+
+# download date
+dateDownloaded <- date()
+dateDownloaded
+
+# Read CSV file using read.table
+cameraData <- read.table("./data/cameras.csv", sep=",", header=TRUE)
+head(cameraData)
+
+# Read excel file using library(xlsx) 
+fileUrl2 <- "https://data.baltimorecity.gov/api/views/dz54-2aru/rows.xlsx?accessType=DOWNLOAD"
+download.file(fileUrl2, destfile="./data/cameras.xlsx", method = "curl")
+dataDownload <-date()
+library(xlsx)
+cameraData2 <- read.xlsx("./data/cameras.xlsx", sheetIndex=1, header=TRUE)
+head(cameraData)
+cameraDataSubset
+cameraDataSubset <- read.xlsx("./data/cameras.xlsx", sheetIndex=1,coIndex=coIndex, rowIndex=rowIndex)
+
+# read xml file using library(xml)
+install.packages("XML")
+library(XML)
+fileurl <- "http://www.w3schools.com/xml/simple.xml"
+doc <- xmlTreeParse(fileurl, useInternal=TRUE)
+rootNode <- xmlRoot(doc)
+xmlName(rootNode)
+names(rootNode)
+rootNode[[1]]
+rootNode[[1]][[1]]
+
+# Using xpathSApply to parse data
+xpathSApply(rootNode, "//name", xmlValue)
+xpathSApply(rootNode, "//price", xmlValue)
+fileurl <- "http://espn.go.com/nfl/team/_/name/bal/baltimore-ravens"
+doc <- htmlTreeParse(fileurl, useInternal=TRUE)
+scores <- xpathSApply(doc, "//li[@class='score']", xmlValue)
+teams <- xpathSApply(doc, "//li[@class='team-name']",xmlValue)
+scores
+teams
+
+# Python way
+# using requests 
+import scrapy
+import requests
+from scrapy.selector import Selector
+
+url = "http://espn.go.com/nfl/team/_/name/bal/baltimore-ravens"
+r2= requests.get(url)
+sel2 = Selector(text=r2.text)
+sel2.xpath('//li[contains(@class,"score")]').extract()    # <li class="score"><a href="/nfl/recap?gameId=400749511">30-17</a></li>
+sel2.xpath('//li//a[contains(@href, "recap?gameId")]/text()').extract()  #
+sel2.xpath('//li[contains(@class,"score")]//a[contains(@href, "recap?gameId")]/text()').extract()
+
+# Using jsonlite to parse JSON file
+library(jsonlite)
+jsonData <- fromJSON("https://api.github.com/users/jtleek/repos")
+names(jsonData)
+names(jsonData$owner)
+jsonData$owner
+jsonData$owner$login
+myjson <- toJSON(iris,pretty=TRUE)
+cat myjson
+cat(myjson)
+iris2 <- fromJSON(myjson)
+iris2
+head(iris2)
+
+# Python way
+import requests      # Get the file 
+r = requests.get("https://api.github.com/users/jtleek/repos")
+r.json()             # print all
+r.json()[0].keys()   # names(jsonData)
+
+import pandas as pd  # put data to dataframe
+r.json()
+df = pd.DataFrame(r.json())
+df.shape[0]
+[df.owner[x]["login"] for x in range(0,df.shape[0])]  #jsonData$owner$login
