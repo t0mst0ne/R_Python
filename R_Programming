@@ -13,3 +13,27 @@ y[good]
 airquality[1:6,]
 good <- complete.cases(airquality)
 airquality[good, ][1:6, ]
+
+# Vectorized Operations
+x <- 1:4 ; y <- 6:9
+x + y
+x > 2
+y == 8
+x * y
+x/y
+
+# Python way
+x = np.array([1,2,3,4])
+y = np.array([6,7,8,9])
+x + y
+x > 2
+y == 8
+x * y
+x / y
+
+# 
+x <- matrix(1:4, 2, 2); y <- matrix(rep(10,4), 2, 2)
+x * y
+x/y
+x %*% y
+
