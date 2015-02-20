@@ -37,3 +37,19 @@ x * y
 x/y
 x %*% y
 
+
+## Control Structures
+if, else: testing a condition
+for: execute a loop a fixed number of times
+while: execute a loop while a condition is true
+repeat: execute an infinite loop
+break: break the execution of a loop
+next: skip an interation of a loop
+return: exit a function
+# If if(cond) expr
+if(x > 3) {
+ y <- 10
+ } else {
+  y <- 0
+  }
+
